@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario Académico | Diseño de Vestuario, Utilería y Escenografía - CUAAD UdeG</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        udeg: {
+                            navy: '#0A192F',
+                            blue: '#002B49',
+                            lightBlue: '#1E3A8A',
+                            gold: '#D4AF37',
+                            accent: '#2563EB',
+                            bg: '#F8FAFC'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+        .gradient-udeg {
+            background: linear-gradient(135deg, #002B49 0%, #0A192F 100%);
+        }
+        .card-shadow {
+            box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05), 0 8px 10px -6px rgba(15, 23, 42, 0.05);
+        }
+        .delivery-card {
+            border-left: 5px solid #d97706;
+            background: linear-gradient(to right, #fffbe3, #ffffff);
+        }
+        .delivery-badge {
+            background-color: #d97706;
+            color: white;
+            animation: pulse-light 2s infinite;
+        }
+        @keyframes pulse-light {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.03); opacity: 0.9; }
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased bg-slate-50 text-slate-900">
+
+    <!-- Top Header / Banner -->
+    <header class="gradient-udeg text-white border-b-4 border-amber-500 sticky top-0 z-40 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <!-- Title & Institution -->
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center border border-white/20 text-amber-400 text-2xl shrink-0">
+                        <i class="fa-solid fa-masks-theater"></i>
+                    </div>
+                    <div>
+                        <div class="flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-wider text-amber-400">
+                            <span>Universidad de Guadalajara</span>
+                            <span>•</span>
+                            <span>CUAAD</span>
+                            <span>•</span>
+                            <span class="bg-amber-500/20 px-2 py-0.5 rounded text-amber-300">Ciclo 2026 B</span>
+                        </div>
+                        <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight text-white mt-0.5">
+                            Diseño de Vestuario, Utilería y Escenografía
+                        </h1>
+                        <p class="text-xs sm:text-sm text-slate-300 flex flex-wrap items-center gap-x-2 gap-y-1">
+                            <span>Licenciatura en Diseño, Arte y Tecnologías Interactivas •</span>
+                            <span class="text-amber-300 font-semibold inline-flex items-center gap-1">
+                                <i class="fa-solid fa-chalkboard-user"></i>Martha Susana Cortés Romero
+                            </span>
+                            <a href="https://instagram.com/m.susana.cortes.r" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-pink-500/20 text-pink-300 hover:bg-pink-500/30 hover:text-pink-200 transition-all text-xs font-mono border border-pink-400/30 ml-1">
+                                <i class="fa-brands fa-instagram text-pink-400"></i>
+                                <span>@m.susana.cortes.r</span>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-[10px] opacity-70"></i>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Action Buttons & Quick Controls -->
+                <div class="flex items-center gap-2 self-start md:self-auto flex-wrap">
+                    <button onclick="openCheckInModal()" class="inline-flex items-center gap-2 px-3.5 py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-bold rounded-lg text-xs transition-all transform hover:scale-105 shadow-md">
+                        <i class="fa-solid fa-heart-pulse text-sm"></i>
+                        <span>¿Cómo me sentí hoy en clase?</span>
+                    </button>
+                    <button onclick="openRubricModal()" class="inline-flex items-center gap-2 px-3.5 py-2 bg-white/10 hover:bg-white/20 text-white font-medium rounded-lg text-xs border border-white/20 transition-all">
+                        <i class="fa-solid fa-clipboard-list text-amber-400"></i>
+                        <span>Ver Rúbricas de Evaluación</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Course Progress & Unit Indicator Bar -->
+    <section class="bg-white border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 text-xs">
+                <!-- Semester Date Range & Schedule Info -->
+                <div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-slate-600">
+                    <div class="flex items-center gap-1.5">
+                        <i class="fa-regular fa-clock text-slate-400"></i>
+                        <span class="font-medium">Horario:</span> Mar y Mié (9:00 a 13:00 hrs)
+                    </div>
+                    <div class="flex items-center gap-1.5 text-amber-700 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200">
+                        <i class="fa-solid fa-calendar-minus"></i>
+                        <span>Día Inhábil: 16 de septiembre</span>
+                    </div>
+                </div>
+
+                <!-- Unit Progress Indicator -->
+                <div class="flex items-center gap-3 w-full lg:w-80">
+                    <span class="text-slate-500 font-medium whitespace-nowrap text-2xs uppercase tracking-wider" id="semester-progress-text">Avance del Curso</span>
+                    <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden flex">
+                        <div id="progress-bar" class="bg-blue-600 h-full rounded-full transition-all duration-500" style="width: 25%;"></div>
+                    </div>
+                    <span id="progress-percent" class="font-bold text-slate-700 min-w-[36px] text-right">25%</span>
+                </div>
+            </div>
+
+            <!-- Units Badges Bar -->
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-2 mt-3 pt-3 border-t border-slate-100">
+                <button onclick="jumpToUnit(1)" id="unit-btn-1" class="unit-badge-btn flex items-center gap-2 p-2 rounded-lg bg-blue-50 border border-blue-200 text-blue-950 text-left transition hover:bg-blue-100">
+                    <span class="w-6 h-6 rounded-full bg-blue-600 text-white font-bold text-xs flex items-center justify-center shrink-0">I</span>
+                    <div class="truncate">
+                        <p class="font-bold text-xs truncate">Unidad I: Vestuario</p>
+                        <p class="text-2xs text-blue-700">18 ago - 15 sep</p>
+                    </div>
+                </button>
+                
+                <button onclick="jumpToUnit(2)" id="unit-btn-2" class="unit-badge-btn flex items-center gap-2 p-2 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-950 text-left transition hover:bg-emerald-100">
+                    <span class="w-6 h-6 rounded-full bg-emerald-600 text-white font-bold text-xs flex items-center justify-center shrink-0">II</span>
+                    <div class="truncate">
+                        <p class="font-bold text-xs truncate">Unidad II: Escenografía</p>
+                        <p class="text-2xs text-emerald-700">22 sep - 20 oct</p>
+                    </div>
+                </button>
+
+                <button onclick="jumpToUnit(3)" id="unit-btn-3" class="unit-badge-btn flex items-center gap-2 p-2 rounded-lg bg-purple-50 border border-purple-200 text-purple-950 text-left transition hover:bg-purple-100">
+                    <span class="w-6 h-6 rounded-full bg-purple-600 text-white font-bold text-xs flex items-center justify-center shrink-0">III</span>
+                    <div class="truncate">
+                        <p class="font-bold text-xs truncate">Unidad III: Utilería</p>
+                        <p class="text-2xs text-purple-700">27 oct - 18 nov</p>
+                    </div>
+                </button>
+
+                <button onclick="jumpToUnit(4)" id="unit-btn-4" class="unit-badge-btn flex items-center gap-2 p-2 rounded-lg bg-amber-50 border border-amber-200 text-amber-950 text-left transition hover:bg-amber-100">
+                    <span class="w-6 h-6 rounded-full bg-amber-600 text-white font-bold text-xs flex items-center justify-center shrink-0">C</span>
+                    <div class="truncate">
+                        <p class="font-bold text-xs truncate">Cierre y Evaluación</p>
+                        <p class="text-2xs text-amber-700">23 nov 2026</p>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-grow w-full">
+        
+        <!-- Controls Bar: View Selector, Week Navigation & Search -->
+        <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 mb-6 flex flex-col md:flex-row items-center justify-between gap-4">
+            
+            <!-- View Mode Switcher -->
+            <div class="flex items-center bg-slate-100 p-1 rounded-lg w-full md:w-auto overflow-x-auto">
+                <button id="view-weekly-btn" onclick="setViewMode('weekly')" class="flex-1 md:flex-none px-3.5 py-2 rounded-md text-xs font-bold transition text-slate-800 bg-white shadow-sm whitespace-nowrap">
+                    <i class="fa-solid fa-calendar-week mr-1.5"></i>Vista Semanal
+                </button>
+                <button id="view-grid-btn" onclick="setViewMode('grid')" class="flex-1 md:flex-none px-3.5 py-2 rounded-md text-xs font-bold text-slate-600 hover:text-slate-900 transition whitespace-nowrap">
+                    <i class="fa-solid fa-table-cells mr-1.5 text-blue-600"></i>Calendario Cuadriculado
+                </button>
+                <button id="view-full-btn" onclick="setViewMode('full')" class="flex-1 md:flex-none px-3.5 py-2 rounded-md text-xs font-bold text-slate-600 hover:text-slate-900 transition whitespace-nowrap">
+                    <i class="fa-solid fa-list-ul mr-1.5"></i>Semestre Completo
+                </button>
+                <button id="view-deliveries-btn" onclick="setViewMode('deliveries')" class="flex-1 md:flex-none px-3.5 py-2 rounded-md text-xs font-bold text-slate-600 hover:text-slate-900 transition whitespace-nowrap">
+                    <i class="fa-solid fa-award mr-1.5 text-amber-500"></i>Solo Entregas
+                </button>
+            </div>
+
+            <!-- Search and Filter Bar -->
+            <div class="relative w-full md:w-72">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 text-xs"></i>
+                <input type="text" id="search-input" onkeyup="handleSearch()" placeholder="Buscar tema, entrega o técnica..." class="w-full pl-9 pr-4 py-2 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white">
+                <button id="clear-search-btn" onclick="clearSearch()" class="hidden absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-600 text-xs">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Jump to Current Date Button -->
+            <button onclick="jumpToCurrentWeek()" class="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-lg text-xs transition border border-slate-200 whitespace-nowrap">
+                <i class="fa-solid fa-location-crosshairs text-blue-600"></i>
+                <span>Semana Actual</span>
+            </button>
+
+        </div>
+
+        <!-- Weekly Navigation View Container -->
+        <div id="weekly-view-container" class="space-y-6">
+            
+            <!-- Week Header Navigator -->
+            <div class="flex flex-col sm:flex-row items-center justify-between bg-white p-4 rounded-xl border border-slate-200 shadow-sm gap-4">
+                
+                <button id="prev-week-btn" onclick="changeWeek(-1)" class="w-full sm:w-auto px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition disabled:opacity-40 disabled:cursor-not-allowed">
+                    <i class="fa-solid fa-chevron-left"></i>
+                    <span>Semana Anterior</span>
+                </button>
+
+                <div class="text-center">
+                    <div class="inline-flex items-center gap-2">
+                        <span id="current-week-number-badge" class="px-2.5 py-1 bg-blue-100 text-blue-800 text-xs font-extrabold rounded-full">
+                            Semana 1 de 15
+                        </span>
+                        <span id="current-unit-pill" class="px-2.5 py-1 bg-slate-100 text-slate-700 text-xs font-semibold rounded-full border border-slate-200">
+                            Unidad I
+                        </span>
+                    </div>
+                    <h2 id="current-week-title" class="text-lg font-extrabold text-slate-900 mt-1">
+                        17 al 23 de Agosto
+                    </h2>
+                    <p id="current-week-subtitle" class="text-xs text-slate-500">
+                        Encuadre del curso y exploración textil
+                    </p>
+                </div>
+
+                <div class="flex items-center gap-2 w-full sm:w-auto">
+                    <!-- Dropdown for direct week jump -->
+                    <select id="week-select-dropdown" onchange="jumpToWeekSelect(this.value)" class="py-2 px-3 bg-slate-50 border border-slate-200 text-slate-700 rounded-lg text-xs font-semibold focus:ring-2 focus:ring-blue-500">
+                        <!-- Populated dynamically by JS -->
+                    </select>
+
+                    <button id="next-week-btn" onclick="changeWeek(1)" class="w-full sm:w-auto px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition disabled:opacity-40 disabled:cursor-not-allowed">
+                        <span>Siguiente Semana</span>
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- Sessions Container Grid (Tuesday & Wednesday cards) -->
+            <div id="weekly-sessions-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+                <!-- Dynamically filled by JavaScript -->
+            </div>
+
+        </div>
+
+        <!-- Full Semester Grid Container (Hidden by default) -->
+        <div id="full-view-container" class="hidden space-y-6">
+            <div class="bg-blue-50 border border-blue-200 p-4 rounded-xl text-xs text-blue-900 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-calendar-days text-xl text-blue-600"></i>
+                    <div>
+                        <p class="font-bold text-sm">Vista Completa del Semestre (31 Sesiones + Cierre)</p>
+                        <p class="text-blue-700">Explora la planeación detallada de todas las semanas del ciclo 2026 A.</p>
+                    </div>
+                </div>
+                <button onclick="setViewMode('weekly')" class="text-blue-700 hover:underline font-bold text-xs whitespace-nowrap">
+                    Volver a vista semanal &rarr;
+                </button>
+            </div>
+
+            <div id="full-semester-list" class="space-y-6">
+                <!-- Populated dynamically by JS -->
+            </div>
+        </div>
+
+        <!-- Deliverables View Container (Hidden by default) -->
+        <div id="deliveries-view-container" class="hidden space-y-6">
+            <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl text-xs text-amber-900 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-award text-xl text-amber-600"></i>
+                    <div>
+                        <p class="font-bold text-sm">Hitos de Evaluación y Entregas Oficiales</p>
+                        <p class="text-amber-800">Aquí se concentran los exámenes y entregas con porcentaje asignado a la calificación final.</p>
+                    </div>
+                </div>
+                <div class="text-right font-extrabold text-amber-700 text-sm">
+                    Suma Total: 100%
+                </div>
+            </div>
+
+            <div id="deliveries-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Populated dynamically by JS -->
+            </div>
+        </div>
+
+        <!-- Monthly Grid Sheet View Container (Calendario Cuadriculado) -->
+        <div id="grid-view-container" class="hidden space-y-8">
+            <div class="bg-blue-900 text-white p-4 rounded-xl shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-amber-400 text-slate-950 flex items-center justify-center font-black text-lg shrink-0">
+                        <i class="fa-solid fa-calendar-days"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-extrabold text-sm sm:text-base text-white">Hoja de Calendario Cuadriculado — Ciclo 2026 B</h3>
+                        <p class="text-xs text-blue-200">Vista mensual con todas las fechas del semestre (Agosto – Diciembre 2026), entregas e inhabilitades.</p>
+                    </div>
+                </div>
+
+                <!-- Legend & Quick Print Button -->
+                <div class="flex items-center gap-2 flex-wrap">
+                    <button onclick="window.print()" class="px-3 py-1.5 bg-white/10 hover:bg-white/20 text-white rounded-lg text-xs font-semibold border border-white/20 transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-print text-amber-400"></i>
+                        <span>Imprimir / PDF</span>
+                    </button>
+                    <button onclick="setViewMode('weekly')" class="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-lg text-xs transition">
+                        Volver a semanal
+                    </button>
+                </div>
+            </div>
+
+            <!-- Visual Legend -->
+            <div class="bg-white p-3 rounded-xl border border-slate-200 flex flex-wrap items-center justify-center gap-4 text-xs font-medium text-slate-600">
+                <span class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded bg-blue-600 inline-block"></span> Clases ordinarias (Mar / Mié)</span>
+                <span class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded bg-amber-500 inline-block"></span> Entregas / Examen</span>
+                <span class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded bg-purple-600 inline-block"></span> Proyecto Final</span>
+                <span class="flex items-center gap-1.5"><span class="w-3.5 h-3.5 rounded bg-rose-500 inline-block"></span> Día Inhábil</span>
+            </div>
+
+            <!-- Month Grids Container -->
+            <div id="monthly-grids-list" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Populated dynamically by JS -->
+            </div>
+        </div>
+
+    </main>
+
+
+    <!-- Modal: Check-In Emocional (Google Form Linking) -->
+    <div id="modal-checkin" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-100 relative transform transition-all">
+            <button onclick="closeCheckInModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <div class="text-center mb-5">
+                <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">
+                    <i class="fa-solid fa-heart-pulse"></i>
+                </div>
+                <h3 class="text-xl font-extrabold text-slate-900">¿Cómo me sentí hoy en clase?</h3>
+                <p class="text-xs text-slate-500 mt-1">
+                    Tu bienestar es indispensable para la creatividad. Cuéntanos brevemente cómo te sientes el día de hoy en la materia.
+                </p>
+            </div>
+
+            <!-- Quick Mood Indicator Selector (Interactive visual) -->
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 mb-5">
+                <p class="text-2xs font-bold uppercase tracking-wider text-slate-500 mb-3 text-center">¿Cómo te sientes en esta sesión?</p>
+                <div class="flex justify-around items-center text-2xl">
+                    <button onclick="selectMood('excelente')" class="mood-btn p-2 rounded-lg hover:bg-amber-100 transition transform hover:scale-125" title="Excelente">😄</button>
+                    <button onclick="selectMood('bien')" class="mood-btn p-2 rounded-lg hover:bg-amber-100 transition transform hover:scale-125" title="Motivado">🙂</button>
+                    <button onclick="selectMood('neutro')" class="mood-btn p-2 rounded-lg hover:bg-amber-100 transition transform hover:scale-125" title="Tranquilo / Neutro">😐</button>
+                    <button onclick="selectMood('cansado')" class="mood-btn p-2 rounded-lg hover:bg-amber-100 transition transform hover:scale-125" title="Cansado / Abrumado">😮‍💨</button>
+                    <button onclick="selectMood('estresado')" class="mood-btn p-2 rounded-lg hover:bg-amber-100 transition transform hover:scale-125" title="Con dudas / Estresado">😰</button>
+                </div>
+            </div>
+
+            <p class="text-xs text-slate-600 mb-4 text-center">
+                Al hacer clic a continuación serás redirigido al formulario de registro continuo para docentes de la UdeG CUAAD.
+            </p>
+
+            <div class="space-y-3">
+                <a id="google-form-link-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSf046poLjaoyNTbdQ1no8jL9hARBUXqfLQdehQ-hgwr_zepYg/viewform" target="_blank" rel="noopener noreferrer" class="w-full py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-extrabold rounded-xl text-center flex items-center justify-center gap-2 hover:from-amber-600 hover:to-amber-700 transition shadow-md">
+                    <span>Abrir Google Form</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                </a>
+                <button onclick="closeCheckInModal()" class="w-full py-2.5 bg-slate-100 text-slate-700 font-semibold rounded-xl text-xs hover:bg-slate-200 transition">
+                    Cerrar ventana
+                </button>
+            </div>
+            
+            <p class="text-2xs text-slate-400 text-center mt-4">
+                * Las respuestas son confidenciales y se utilizan para adaptar el ritmo de los talleres.
+            </p>
+        </div>
+    </div>
+
+    <!-- Modal: Estructura de Evaluación y Acreditación -->
+    <div id="modal-rubric" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-3xl w-full p-6 shadow-2xl border border-slate-100 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeRubricModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 bg-blue-100 text-blue-700 rounded-xl flex items-center justify-center font-bold text-lg">
+                    <i class="fa-solid fa-chart-pie"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-extrabold text-slate-900">Estructura de Evaluación del Curso</h3>
+                    <p class="text-xs text-slate-500">CUAAD — Licenciatura en Diseño, Arte y Tecnologías Interactivas</p>
+                </div>
+            </div>
+
+            <!-- Percentage breakdown cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 mb-6">
+                
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+                    <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block">Examen Teórico</span>
+                    <span class="text-2xl font-black text-blue-700">10%</span>
+                    <p class="text-2xs text-slate-600 mt-1">18 Nov — Evaluación escrita.</p>
+                </div>
+
+                <div class="p-3 rounded-xl bg-sky-50 border border-sky-200">
+                    <span class="text-xs font-bold text-sky-800 uppercase tracking-wider block">Concept Art y Planos</span>
+                    <span class="text-2xl font-black text-sky-600">10%</span>
+                    <p class="text-2xs text-sky-900 mt-1">30 Sep — Entrega preliminar de concept art y planos de los 3 escenarios.</p>
+                </div>
+
+                <div class="p-3 rounded-xl bg-amber-50 border border-amber-200">
+                    <span class="text-xs font-bold text-amber-800 uppercase tracking-wider block">Cubo de Estireno</span>
+                    <span class="text-2xl font-black text-amber-600">20%</span>
+                    <p class="text-2xs text-amber-900 mt-1">14 Oct — Entrega única del cubo de 6 caras (15x15x15 cm) terminado.</p>
+                </div>
+
+                <div class="p-3 rounded-xl bg-emerald-50 border border-emerald-200">
+                    <span class="text-xs font-bold text-emerald-800 uppercase tracking-wider block">Proyecto Final 1</span>
+                    <span class="text-2xl font-black text-emerald-600">30%</span>
+                    <p class="text-2xs text-emerald-900 mt-1">3 Nov — Arma de utilería del personaje (en equipo).</p>
+                </div>
+
+                <div class="p-3 rounded-xl bg-purple-50 border border-purple-200">
+                    <span class="text-xs font-bold text-purple-800 uppercase tracking-wider block">Proyecto Final 2</span>
+                    <span class="text-2xl font-black text-purple-600">30%</span>
+                    <p class="text-2xs text-purple-900 mt-1">23 Nov — Accesorio de vestuario para cabeza/cara (en equipo).</p>
+                </div>
+
+            </div>
+
+            <!-- Cubo de Estireno Breakdown Section -->
+            <div class="bg-amber-500/10 border border-amber-300 rounded-xl p-4 mb-6">
+                <h4 class="font-bold text-xs uppercase tracking-wider text-amber-900 flex items-center gap-2 mb-2">
+                    <i class="fa-solid fa-cube text-amber-600"></i>
+                    Evaluación de Escenografía: Concept Art + Cubo de Estireno (30% Total)
+                </h4>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                    <div class="bg-white p-3 rounded-lg border border-amber-200">
+                        <p class="font-bold text-slate-800 flex items-center justify-between">
+                            <span>1. Entrega Preliminar: Concept Art y Planos</span>
+                            <span class="text-sky-700 font-extrabold">10%</span>
+                        </p>
+                        <p class="text-2xs text-slate-500 mt-1">Entrega el 30 de septiembre: Bocetos ilustrados, concept art y planos de distribución técnica de los 3 escenarios.</p>
+                    </div>
+                    <div class="bg-white p-3 rounded-lg border border-amber-200">
+                        <p class="font-bold text-slate-800 flex items-center justify-between">
+                            <span>2. Entrega Única: Cubo de Estireno Completo</span>
+                            <span class="text-amber-700 font-extrabold">20%</span>
+                        </p>
+                        <p class="text-2xs text-slate-500 mt-1">Entrega única el 14 de octubre: Cubo de estireno terminado de 15x15x15 cm con sus 6 caras completas (2 maderas, 2 cerámicas y 2 metales).</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Accreditation Checklist -->
+            <div class="bg-slate-900 text-white rounded-xl p-4">
+                <h4 class="font-bold text-xs uppercase tracking-wider text-amber-400 mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-shield-halved"></i> Requisitos Obligatorios de Acreditación
+                </h4>
+                
+                <!-- Explicit Warning Box -->
+                <div class="mb-3 p-3 bg-red-500/20 border border-red-400/40 rounded-lg text-red-200 text-xs flex items-start gap-2.5">
+                    <i class="fa-solid fa-triangle-exclamation text-red-400 text-base mt-0.5 shrink-0"></i>
+                    <div>
+                        <strong class="text-white block font-bold">Aviso Importante sobre Acreditación:</strong>
+                        El cumplimiento del porcentaje de asistencia y la entrega en tiempo y forma del 100% de las actividades y proyectos son <u>requisitos estrictos e indispensables</u> para conservar el derecho a evaluación ordinaria y obtener una calificación final aprobatoria.
+                    </div>
+                </div>
+
+                <ul class="space-y-2 text-xs">
+                    <li class="flex items-start gap-2">
+                        <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+                        <span><strong>Mínimo 80% de asistencia global</strong> registrada en las sesiones del ciclo escolar.</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+                        <span><strong>100% de los proyectos finales entregados</strong> (Arma de personaje y Accesorio de vestuario).</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+                        <span><strong>Cuaderno de bitácora completo</strong> con la totalidad de los bocetos y ejercicios desarrollados en el semestre.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="mt-6 text-right">
+                <button onclick="closeRubricModal()" class="px-5 py-2 bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold rounded-xl text-xs transition">
+                    Entendido
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 text-xs border-t border-slate-800 mt-12 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-slate-800 text-amber-400 flex items-center justify-center font-bold text-sm">
+                    UdeG
+                </div>
+                <div>
+                    <p class="font-bold text-slate-200">Universidad de Guadalajara — CUAAD</p>
+                    <p class="text-2xs text-slate-500">Diseño de Vestuario, Utilería y Escenografía • Ciclo 2026 B</p>
+                </div>
+            </div>
+            <div class="text-center sm:text-right text-2xs text-slate-500">
+                <p>Plataforma interactiva para el seguimiento de actividades académicas.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Data Structure for Academic Weeks
+        const courseWeeks = [
+            {
+                weekNum: 1,
+                dateRange: "17 - 23 Ago 2026",
+                unit: 1,
+                unitName: "Unidad I: Diseño de Vestuario",
+                summary: "Encuadre del curso e introducción al diseño de vestuario",
+                sessions: [
+                    {
+                        sessionNum: 1,
+                        date: "18-ago",
+                        day: "Martes",
+                        topic: "Encuadre del curso (rúbrica y evaluación)",
+                        type: "Teoría / Introducción",
+                        deliverable: null,
+                        notes: "Presentación del programa temático, criterios de acreditación y metodología de trabajo."
+                    },
+                    {
+                        sessionNum: 2,
+                        date: "19-ago",
+                        day: "Miércoles",
+                        topic: "¿Qué hace un diseñador de vestuario?",
+                        type: "Teoría",
+                        deliverable: null,
+                        notes: "Introducción al vestuario escénico, la dramática de la prenda y el rol del diseñador."
+                    }
+                ]
+            },
+            {
+                weekNum: 2,
+                dateRange: "24 - 30 Ago 2026",
+                unit: 1,
+                unitName: "Unidad I: Diseño de Vestuario",
+                summary: "Exploración de materiales textiles y vestuario teatral",
+                sessions: [
+                    {
+                        sessionNum: 3,
+                        date: "25-ago",
+                        day: "Martes",
+                        topic: "Taller: exploración de materiales textiles",
+                        type: "Taller Práctico",
+                        deliverable: null,
+                        notes: "Traer muestrario de telas, texturas y tijeras. Trabajo de reconocimiento sensorial en bitácora."
+                    },
+                    {
+                        sessionNum: 4,
+                        date: "26-ago",
+                        day: "Miércoles",
+                        topic: "Diseño de vestuario en el teatro y referentes visuales",
+                        type: "Teoría / Taller",
+                        deliverable: null,
+                        notes: "Análisis de la dramática de la prenda, silueta escénica y construcción de Moodboards de personaje en cuaderno."
+                    }
+                ]
+            },
+            {
+                weekNum: 3,
+                dateRange: "31 Ago - 06 Sep 2026",
+                unit: 1,
+                unitName: "Unidad I: Diseño de Vestuario",
+                summary: "Vestuario cinematográfico y primer boceto de personaje",
+                sessions: [
+                    {
+                        sessionNum: 5,
+                        date: "01-sep",
+                        day: "Martes",
+                        topic: "Diseño de vestuario en el cine",
+                        type: "Teoría",
+                        deliverable: null,
+                        notes: "Continuidad, paleta de color cinematográfica y especificidades de vestuario ante la cámara."
+                    },
+                    {
+                        sessionNum: 6,
+                        date: "02-sep",
+                        day: "Miércoles",
+                        topic: "Taller: boceto exploratorio de personaje (semilla del proyecto final)",
+                        type: "Taller Práctico",
+                        deliverable: null,
+                        notes: "Primeros trazos del personaje conceptual que se utilizará en los proyectos finales."
+                    }
+                ]
+            },
+            {
+                weekNum: 4,
+                dateRange: "07 - 13 Sep 2026",
+                unit: 1,
+                unitName: "Unidad I: Diseño de Vestuario",
+                summary: "Estructura del departamento y cierre de la Unidad I",
+                sessions: [
+                    {
+                        sessionNum: 7,
+                        date: "08-sep",
+                        day: "Martes",
+                        topic: "Puestos en el departamento de vestuario",
+                        type: "Teoría",
+                        deliverable: null,
+                        notes: "Diseñador, cortador, ambientador de vestuario, desgastador y dresser en producciones."
+                    },
+                    {
+                        sessionNum: 8,
+                        date: "09-sep",
+                        day: "Miércoles",
+                        topic: "Taller: cierre de unidad, retroalimentación",
+                        type: "Taller Práctico",
+                        deliverable: null,
+                        notes: "Revisión preliminar de bitácoras y retroalimentación de propuestas visuales."
+                    }
+                ]
+            },
+            {
+                weekNum: 5,
+                dateRange: "14 - 20 Sep 2026",
+                unit: 1,
+                unitName: "Unidad I: Cierre & Día Inhábil",
+                summary: "Repaso general y suspensión de labores",
+                sessions: [
+                    {
+                        sessionNum: 9,
+                        date: "15-sep",
+                        day: "Martes",
+                        topic: "Repaso Unidad I",
+                        type: "Repaso",
+                        deliverable: null,
+                        notes: "Síntesis de conceptos clave de vestuario previo a iniciar Escenografía."
+                    },
+                    {
+                        sessionNum: null,
+                        date: "16-sep",
+                        day: "Miércoles",
+                        topic: "SIN CLASE (Día Inhábil Oficial UdeG)",
+                        type: "Inhábil",
+                        deliverable: null,
+                        notes: "Suspensión de labores académicas y administrativas."
+                    }
+                ]
+            },
+            {
+                weekNum: 6,
+                dateRange: "21 - 27 Sep 2026",
+                unit: 2,
+                unitName: "Unidad II: Diseño de Escenografía",
+                summary: "Inicio del Proyecto Individual y diseño espacial",
+                sessions: [
+                    {
+                        sessionNum: 10,
+                        date: "22-sep",
+                        day: "Martes",
+                        topic: "¿Qué hace un diseñador de escenografía?",
+                        type: "Teoría",
+                        deliverable: null,
+                        notes: "Principios de espacialidad, lenguaje arquitectónico dramático y la caja negra."
+                    },
+                    {
+                        sessionNum: 11,
+                        date: "23-sep",
+                        day: "Miércoles",
+                        topic: "Taller: practicando diseño de un escenario, boceto, ilustración y plano",
+                        type: "Taller Práctico",
+                        deliverable: null,
+                        notes: "Definición conceptual y práctica de ambientación espacial en libreta."
+                    }
+                ]
+            },
+            {
+                weekNum: 7,
+                dateRange: "28 Sep - 04 Oct 2026",
+                unit: 2,
+                unitName: "Unidad II: Diseño de Escenografía",
+                summary: "Escenografía teatral y entrega preliminar de Concept Art y Planos",
+                sessions: [
+                    {
+                        sessionNum: 12,
+                        date: "29-sep",
+                        day: "Martes",
+                        topic: "Diseño de escenografía en el teatro",
+                        type: "Teoría",
+                        deliverable: null,
+                        notes: "Visibilidad, escala, tramoya y distribución espacial en foro."
+                    },
+                    {
+                        sessionNum: 13,
+                        date: "30-sep",
+                        day: "Miércoles",
+                        topic: "Taller: revisión y entrega preliminar de Concept Art y Planos de escenarios",
+                        type: "Taller & Entrega",
+                        deliverable: {
+                            title: "Entrega Preliminar: Concept Art y Planos",
+                            percent: "10%",
+                            description: "Entrega de concept art ilustrado y planos de distribución técnica de los 3 escenarios."
+                        },
+                        notes: "Revisión y retroalimentación de la propuesta espacial en taller."
+                    }
+                ]
+            },
+            {
+                weekNum: 8,
+                dateRange: "05 - 11 Oct 2026",
+                unit: 2,
+                unitName: "Unidad II: Diseño de Escenografía",
+                summary: "Escenografía cinematográfica y taller de acabados en estireno",
+                sessions: [
+                    {
+                        sessionNum: 14,
+                        date: "06-oct",
+                        day: "Martes",
+                        topic: "Diseño de escenografía en el cine",
+                        type: "Teoría",
+                        deliverable: null,
+                        notes: "Set dressing, encuadre cinematográfico, profundidad de campo y maquetas."
+                    },
+                    {
+                        sessionNum: 15,
+                        date: "07-oct",
+                        day: "Miércoles",
+                        topic: "Taller: construcción y aplicación de acabados en el cubo de estireno",
+                        type: "Taller Práctico",
+                        deliverable: null,
+                        notes: "Trabajo de texturizado de maderas, cerámicas y metales en las 6 caras del cubo."
+                    }
+                ]
+            },
+            {
+                weekNum: 9,
+                dateRange: "12 - 18 Oct 2026",
+                unit: 2,
+                unitName: "Unidad II: Diseño de Escenografía",
+                summary: "Departamento de escenografía y ENTREGA ÚNICA del Cubo de Estireno",
+                sessions: [
+                    {
+                        sessionNum: 16,
+                        date: "13-oct",
+                        day: "Martes",
+                        topic: "Puestos en el departamento de escenografía",
+                        type: "Teoría",
+                        deliverable: null,
+                        notes: "Production designer, art director, prop master, scenic artist y carpinteros escénicos."
+                    },
+                    {
+                        sessionNum: 17,
+                        date: "14-oct",
+                        day: "Miércoles",
+                        topic: "Taller: ENTREGA ÚNICA DEL CUBO DE ESTIRENO (6 caras terminadas)",
+                        type: "Taller & Entrega Especial",
+                        deliverable: {
+                            title: "Entrega Única: Cubo de Estireno (6 Caras Completo)",
+                            percent: "20%",
+                            description: "Entrega del cubo de estireno terminado con sus 6 caras (maderas, cerámicas y metales)."
+                        },
+                        notes: "Evaluación presencial del cubo completo con sus tres acabados."
+                    }
+                ]
+            },
+            {
+                weekNum: 10,
+                dateRange: "19 - 25 Oct 2026",
+                unit: 2,
+                unitName: "Unidad II: Evaluación & Briefing",
+                summary: "Retroalimentación del proyecto individual y briefing de proyectos finales",
+                sessions: [
+                    {
+                        sessionNum: 18,
+                        date: "20-oct",
+                        day: "Martes",
+                        topic: "Retroalimentación y revisión del proyecto individual de Escenografía",
+                        type: "Retroalimentación",
+                        deliverable: null,
+                        notes: "Revisión general de proyectos y síntesis de contenidos de Escenografía."
+                    },
+                    {
+                        sessionNum: 19,
+                        date: "21-oct",
+                        day: "Miércoles",
+                        topic: "Retroalimentación del proyecto individual + briefing de proyectos finales",
+                        type: "Retroalimentación",
+                        deliverable: null,
+                        notes: "Publicación de calificaciones parciales y formación de equipos para Unidades III."
+                    }
+                ]
+            },
+            {
+                weekNum: 11,
+                dateRange: "26 Oct - 01 Nov 2026",
+                unit: 3,
+                unitName: "Unidad III: Diseño de Utilería",
+                summary: "Inicio del trabajo en equipo: definición de arma y accesorio",
+                sessions: [
+                    {
+                        sessionNum: 20,
+                        date: "27-oct",
+                        day: "Martes",
+                        topic: "¿Qué hace un diseñador de utilería? + formación de equipos y definición del personaje",
+                        type: "Teoría & Equipos",
+                        deliverable: null,
+                        notes: "Tipos de utilería (de mano, de escena, de ensayo) y roles dentro del equipo."
+                    },
+                    {
+                        sessionNum: 21,
+                        date: "28-oct",
+                        day: "Miércoles",
+                        topic: "Taller: boceto del arma + boceto del accesorio de cabeza/cara",
+                        type: "Taller Práctico",
+                        deliverable: null,
+                        notes: "Revisión de dimensiones realistas, ergonomía y propuesta estética en bitácora."
+                    }
+                ]
+            },
+            {
+                weekNum: 12,
+                dateRange: "02 - 08 Nov 2026",
+                unit: 3,
+                unitName: "Unidad III: Proyecto Final 1",
+                summary: "ENTREGA DE PROYECTO FINAL 1 (Arma) y arranque de accesorio",
+                sessions: [
+                    {
+                        sessionNum: 22,
+                        date: "03-nov",
+                        day: "Martes",
+                        topic: "ENTREGA DE PROYECTO FINAL 1 — ARMA DEL PERSONAJE",
+                        type: "Entrega Final",
+                        deliverable: {
+                            title: "Proyecto Final 1 — Arma del Personaje",
+                            percent: "30%",
+                            description: "Presentación y evaluación del arma física terminada a escala real con acabados profesionales."
+                        },
+                        notes: "Presentación presencial por equipo frente al grupo."
+                    },
+                    {
+                        sessionNum: 23,
+                        date: "04-nov",
+                        day: "Miércoles",
+                        topic: "Diseño de utilería en el teatro y cine + Taller de accesorio",
+                        type: "Teoría & Taller",
+                        deliverable: null,
+                        notes: "Inicio de maquetado del accesorio de vestuario para cabeza/cara."
+                    }
+                ]
+            },
+            {
+                weekNum: 13,
+                dateRange: "09 - 15 Nov 2026",
+                unit: 3,
+                unitName: "Unidad III: Accesorio de Vestuario",
+                summary: "Construcción y avance del accesorio de vestuario para cabeza/cara",
+                sessions: [
+                    {
+                        sessionNum: 24,
+                        date: "10-nov",
+                        day: "Martes",
+                        topic: "Diseño de utilería en el cine y vestuario integrado",
+                        type: "Teoría",
+                        deliverable: null,
+                        notes: "Análisis de piezas de cabeza, máscaras, tocados y accesorios escénicos."
+                    },
+                    {
+                        sessionNum: 25,
+                        date: "11-nov",
+                        day: "Miércoles",
+                        topic: "Taller: construcción del accesorio de vestuario cabeza/cara — avances",
+                        type: "Taller Práctico",
+                        deliverable: null,
+                        notes: "Muestreo de encaje anatómico en cabeza/rostro y estructura base de fijación."
+                    }
+                ]
+            },
+            {
+                weekNum: 14,
+                dateRange: "16 - 22 Nov 2026",
+                unit: 3,
+                unitName: "Unidad III: Diseño de Utilería & Examen",
+                summary: "Puestos del departamento, Examen Teórico y acabados del accesorio de cabeza",
+                sessions: [
+                    {
+                        sessionNum: 26,
+                        date: "17-nov",
+                        day: "Martes",
+                        topic: "Puestos en el departamento de utilería",
+                        type: "Teoría",
+                        deliverable: null,
+                        notes: "Prop maker, armero escénico, moldes y vaciado, prop master en llamados."
+                    },
+                    {
+                        sessionNum: 27,
+                        date: "18-nov",
+                        day: "Miércoles",
+                        topic: "EXAMEN TEÓRICO + Taller de accesorio",
+                        type: "Examen Oficial",
+                        deliverable: {
+                            title: "Examen Teórico",
+                            percent: "10%",
+                            description: "Evaluación teórica presencial."
+                        },
+                        notes: "Evaluación presencial escrita. Traer bolígrafo y llegar con puntualidad."
+                    }
+                ]
+            },
+            {
+                weekNum: 15,
+                dateRange: "23 - 27 Nov 2026",
+                unit: 4,
+                unitName: "Cierre de Semestre & Evaluación Final",
+                summary: "ENTREGA FINAL DEL CURSO, revisión de cuaderno y cierre escolar",
+                sessions: [
+                    {
+                        sessionNum: 28,
+                        date: "23-nov",
+                        day: "Lunes",
+                        topic: "ENTREGA PROYECTO FINAL 2 + Revisión de Cuaderno Completo + Cierre de Curso",
+                        type: "Cierre Final",
+                        deliverable: {
+                            title: "Proyecto Final 2 (Accesorio 30%) + Cuaderno Completo",
+                            percent: "30%",
+                            description: "Entrega del accesorio para cabeza/cara terminado (30%), entrega de cuaderno de bitácora completo y firma de actas."
+                        },
+                        notes: "Jornada de evaluación final, montaje del personaje completo y cierre oficial del semestre."
+                    }
+                ]
+            }
+        ];
+
+        // Global State Variables
+        let currentWeekIndex = 0; // Default Week 1
+        let currentViewMode = 'weekly'; // 'weekly' | 'grid' | 'full' | 'deliveries'
+
+        // LocalStorage Helpers for student task completion
+        function getCompletedState() {
+            try {
+                return JSON.parse(localStorage.getItem('cuaad_vestuario_completed') || '{}');
+            } catch (e) {
+                return {};
+            }
+        }
+
+        function toggleSessionCompleted(sessionKey) {
+            const state = getCompletedState();
+            state[sessionKey] = !state[sessionKey];
+            localStorage.setItem('cuaad_vestuario_completed', JSON.stringify(state));
+            renderCurrentView();
+        }
+
+        // Render Weekly View
+        function renderWeeklyView() {
+            const week = courseWeeks[currentWeekIndex];
+            if (!week) return;
+
+            // Update navigator titles
+            document.getElementById('current-week-number-badge').textContent = `Semana ${week.weekNum} de 16`;
+            document.getElementById('current-week-title').textContent = week.dateRange;
+            document.getElementById('current-week-subtitle').textContent = week.summary;
+            document.getElementById('current-unit-pill').textContent = week.unitName.split(':')[0];
+
+            // Disable/enable prev/next buttons
+            document.getElementById('prev-week-btn').disabled = (currentWeekIndex === 0);
+            document.getElementById('next-week-btn').disabled = (currentWeekIndex === courseWeeks.length - 1);
+
+            // Synchronize dropdown
+            document.getElementById('week-select-dropdown').value = currentWeekIndex;
+
+            // Render cards
+            const grid = document.getElementById('weekly-sessions-grid');
+            grid.innerHTML = '';
+
+            const completedState = getCompletedState();
+
+            week.sessions.forEach(session => {
+                const sessionKey = `week_${week.weekNum}_session_${session.sessionNum || session.date}`;
+                const isCompleted = !!completedState[sessionKey];
+                
+                const card = document.createElement('div');
+                const isDelivery = !!session.deliverable;
+                const isInhabil = session.type === 'Inhábil';
+
+                let cardBorderClass = "border-slate-200 bg-white";
+                if (isDelivery) cardBorderClass = "delivery-card border-amber-400";
+                if (isInhabil) cardBorderClass = "border-slate-300 bg-slate-100 opacity-80";
+
+                card.className = `rounded-2xl border p-5 transition-all shadow-sm flex flex-col justify-between ${cardBorderClass}`;
+
+                card.innerHTML = `
+                    <div>
+                        <!-- Header Badge Row -->
+                        <div class="flex items-center justify-between gap-2 mb-3">
+                            <div class="flex items-center gap-2">
+                                <span class="px-2.5 py-1 rounded-lg text-xs font-black uppercase ${
+                                    isInhabil ? 'bg-slate-300 text-slate-800' :
+                                    isDelivery ? 'bg-amber-500 text-slate-950 font-extrabold' : 'bg-slate-900 text-white'
+                                }">
+                                    ${session.date} • ${session.day}
+                                </span>
+                                ${session.sessionNum ? `
+                                    <span class="px-2 py-1 rounded-md text-2xs font-bold bg-slate-100 text-slate-600 border border-slate-200">
+                                        Sesión ${session.sessionNum}
+                                    </span>
+                                ` : ''}
+                            </div>
+
+                            <label class="inline-flex items-center gap-1.5 cursor-pointer text-xs font-semibold text-slate-500 hover:text-slate-800 select-none">
+                                <input type="checkbox" onchange="toggleSessionCompleted('${sessionKey}')" ${isCompleted ? 'checked' : ''} class="w-4 h-4 text-blue-600 rounded border-slate-300 focus:ring-blue-500">
+                                <span class="${isCompleted ? 'line-through text-slate-400' : ''}">${isCompleted ? 'Completada' : 'Marcar'}</span>
+                            </label>
+                        </div>
+
+                        <!-- Session Title -->
+                        <h3 class="text-base font-extrabold text-slate-900 leading-snug mb-2 ${isCompleted ? 'line-through text-slate-400' : ''}">
+                            ${session.topic}
+                        </h3>
+
+                        <!-- Type Badge -->
+                        <div class="mb-3">
+                            <span class="inline-block px-2.5 py-0.5 rounded-full text-2xs font-bold uppercase tracking-wider ${
+                                isInhabil ? 'bg-slate-200 text-slate-700' :
+                                isDelivery ? 'bg-amber-100 text-amber-900 border border-amber-300' :
+                                'bg-blue-50 text-blue-800 border border-blue-200'
+                            }">
+                                <i class="fa-solid ${
+                                    isDelivery ? 'fa-triangle-exclamation text-amber-600' :
+                                    isInhabil ? 'fa-ban' : 'fa-chalkboard-user'
+                                } mr-1"></i>
+                                ${session.type}
+                            </span>
+                        </div>
+
+                        <!-- Deliverable Box if exists -->
+                        ${session.deliverable ? `
+                            <div class="mt-3 p-3.5 rounded-xl bg-amber-50 border border-amber-300/80 mb-3 shadow-inner">
+                                <div class="flex items-center justify-between gap-2 mb-1">
+                                    <span class="text-xs font-extrabold text-amber-950 flex items-center gap-1.5">
+                                        <i class="fa-solid fa-trophy text-amber-600"></i>
+                                        ENTREGA EVALUABLE
+                                    </span>
+                                    <span class="px-2 py-0.5 rounded-full bg-amber-600 text-white font-black text-xs shadow-sm">
+                                        ${session.deliverable.percent}
+                                    </span>
+                                </div>
+                                <p class="text-xs font-bold text-slate-900">${session.deliverable.title}</p>
+                                <p class="text-2xs text-slate-600 mt-0.5">${session.deliverable.description}</p>
+                            </div>
+                        ` : ''}
+
+                        <!-- Session Notes -->
+                        <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                            <i class="fa-solid fa-circle-info text-slate-400 mr-1 text-2xs"></i>
+                            ${session.notes}
+                        </p>
+                    </div>
+
+                    <!-- Footer Action Bar -->
+                    <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-2 text-2xs">
+                        <span class="text-slate-400 font-medium">UdeG CUAAD • Taller</span>
+                        
+                        <button onclick="openCheckInModal()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-amber-100 hover:text-amber-900 text-slate-700 font-bold transition">
+                            <i class="fa-solid fa-heart-pulse text-amber-500"></i>
+                            <span>¿Cómo me sentí hoy en clase?</span>
+                        </button>
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+
+            // Update course progress bar based on week
+            updateProgressBar();
+        }
+
+        // Render Full Semester View
+        function renderFullView() {
+            const container = document.getElementById('full-semester-list');
+            container.innerHTML = '';
+
+            const completedState = getCompletedState();
+
+            courseWeeks.forEach(week => {
+                const weekCard = document.createElement('div');
+                weekCard.className = "bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-3";
+                
+                let sessionsHTML = '';
+                week.sessions.forEach(s => {
+                    const sessionKey = `week_${week.weekNum}_session_${s.sessionNum || s.date}`;
+                    const isDone = !!completedState[sessionKey];
+
+                    sessionsHTML += `
+                        <div class="p-3 rounded-xl ${s.deliverable ? 'bg-amber-50 border border-amber-200' : 'bg-slate-50 border border-slate-100'} flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+                            <div class="flex items-start gap-3">
+                                <span class="px-2 py-1 rounded bg-slate-900 text-white font-bold text-2xs shrink-0 mt-0.5">
+                                    ${s.date}
+                                </span>
+                                <div>
+                                    <p class="font-extrabold text-slate-900 ${isDone ? 'line-through text-slate-400' : ''}">
+                                        ${s.topic}
+                                    </p>
+                                    <p class="text-2xs text-slate-500 mt-0.5">${s.type} ${s.sessionNum ? '• Sesión ' + s.sessionNum : ''}</p>
+                                </div>
+                            </div>
+
+                            ${s.deliverable ? `
+                                <div class="shrink-0 bg-amber-500 text-slate-950 px-2.5 py-1 rounded-lg font-black text-2xs flex items-center gap-1">
+                                    <i class="fa-solid fa-award"></i>
+                                    <span>${s.deliverable.title} (${s.deliverable.percent})</span>
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                });
+
+                weekCard.innerHTML = `
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+                        <div>
+                            <span class="text-2xs font-extrabold text-blue-700 uppercase tracking-wider">Semana ${week.weekNum} • ${week.dateRange}</span>
+                            <h4 class="text-sm font-bold text-slate-900">${week.unitName}</h4>
+                        </div>
+                        <button onclick="jumpToWeekDirect(${week.weekNum - 1})" class="px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-2xs font-bold transition">
+                            Ir a semana &rarr;
+                        </button>
+                    </div>
+                    <div class="space-y-2">
+                        ${sessionsHTML}
+                    </div>
+                `;
+
+                container.appendChild(weekCard);
+            });
+        }
+
+        // Render Deliverables Only View
+        function renderDeliveriesView() {
+            const container = document.getElementById('deliveries-list');
+            container.innerHTML = '';
+
+            let count = 0;
+
+            courseWeeks.forEach(week => {
+                week.sessions.forEach(session => {
+                    if (session.deliverable) {
+                        count++;
+                        const delCard = document.createElement('div');
+                        delCard.className = "bg-white border-2 border-amber-400 rounded-2xl p-5 shadow-sm flex flex-col justify-between";
+                        
+                        delCard.innerHTML = `
+                            <div>
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="px-2.5 py-1 bg-amber-100 text-amber-900 font-extrabold text-2xs rounded-full">
+                                        ${session.date} • Semana ${week.weekNum}
+                                    </span>
+                                    <span class="px-3 py-1 bg-amber-500 text-slate-950 font-black text-xs rounded-lg shadow-sm">
+                                        ${session.deliverable.percent} de la nota final
+                                    </span>
+                                </div>
+                                <h3 class="text-base font-extrabold text-slate-900 mb-1">
+                                    ${session.deliverable.title}
+                                </h3>
+                                <p class="text-xs text-slate-600 mb-3">
+                                    ${session.deliverable.description}
+                                </p>
+                                <p class="text-2xs text-slate-500 bg-slate-50 p-2 rounded-lg border border-slate-100">
+                                    <strong>Tema asociado:</strong> ${session.topic}
+                                </p>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-2xs text-slate-500">
+                                <span>Unidad ${week.unit}</span>
+                                <button onclick="jumpToWeekDirect(${week.weekNum - 1})" class="text-blue-600 hover:underline font-bold">
+                                    Ver en calendario &rarr;
+                                </button>
+                            </div>
+                        `;
+
+                        container.appendChild(delCard);
+                    }
+                });
+            });
+        }
+
+        // Render Full Monthly Grid Sheet View (2026 B: Aug, Sep, Oct, Nov, Dec)
+        // Render Full Monthly Grid Sheet View (2026 B: Aug, Sep, Oct, Nov)
+        function renderGridView() {
+            const container = document.getElementById('monthly-grids-list');
+            container.innerHTML = '';
+
+            // Map sessions by date format 'DD-mmm' (e.g., '18-ago', '30-sep')
+            const sessionMap = {};
+            courseWeeks.forEach((week, wIdx) => {
+                week.sessions.forEach(s => {
+                    sessionMap[s.date.toLowerCase()] = { ...s, weekNum: week.weekNum, weekIdx: wIdx };
+                });
+            });
+
+            // Months definition for 2026 B
+            const months = [
+                { name: "Agosto 2026", year: 2026, monthIdx: 7, daysCount: 31, startDayOfWeek: 6, key: 'ago' }, // Aug 1 is Saturday
+                { name: "Septiembre 2026", year: 2026, monthIdx: 8, daysCount: 30, startDayOfWeek: 2, key: 'sep' }, // Sep 1 is Tuesday
+                { name: "Octubre 2026", year: 2026, monthIdx: 9, daysCount: 31, startDayOfWeek: 4, key: 'oct' }, // Oct 1 is Thursday
+                { name: "Noviembre 2026", year: 2026, monthIdx: 10, daysCount: 30, startDayOfWeek: 0, key: 'nov' } // Nov 1 is Sunday
+            ];
+
+            const dayNames = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+
+            months.forEach(m => {
+                const monthCard = document.createElement('div');
+                monthCard.className = "bg-white border border-slate-200 rounded-2xl p-4 shadow-sm space-y-3";
+
+                let monthHTML = `
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+                        <h4 class="text-sm font-extrabold text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-regular fa-calendar text-blue-600"></i>
+                            ${m.name}
+                        </h4>
+                        <span class="text-2xs font-semibold bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">
+                            Ciclo 2026 B
+                        </span>
+                    </div>
+
+                    <!-- Days Header Grid -->
+                    <div class="grid grid-cols-7 gap-1 text-center font-bold text-2xs text-slate-400 py-1 uppercase">
+                        ${dayNames.map(d => `<div>${d}</div>`).join('')}
+                    </div>
+
+                    <!-- Month Days Cells Grid -->
+                    <div class="grid grid-cols-7 gap-1 text-xs">
+                `;
+
+                // Empty cells before month start day
+                for (let i = 0; i < m.startDayOfWeek; i++) {
+                    monthHTML += `<div class="h-16 sm:h-20 bg-slate-50/50 rounded-lg border border-slate-100/50"></div>`;
+                }
+
+                // Days of month
+                for (let day = 1; day <= m.daysCount; day++) {
+                    const dayStr = day < 10 ? `0${day}` : `${day}`;
+                    const dateKey = `${dayStr}-${m.key}`;
+                    const session = sessionMap[dateKey];
+
+                    let cellBg = "bg-white border-slate-200 text-slate-700";
+                    let content = '';
+
+                    if (session) {
+                        const isDelivery = !!session.deliverable;
+                        const isInhabil = session.type === 'Inhábil';
+                        const isFinalProj = session.deliverable && session.deliverable.percent === '30%';
+
+                        if (isInhabil) {
+                            cellBg = "bg-rose-50 border-rose-300 text-rose-950 font-bold";
+                            content = `
+                                <div class="text-2xs text-rose-600 font-bold mt-0.5 truncate" title="Día Inhábil">
+                                    🚫 Inhábil
+                                </div>
+                            `;
+                        } else if (isFinalProj) {
+                            cellBg = "bg-purple-100 border-purple-400 text-purple-950 font-extrabold ring-2 ring-purple-400/30";
+                            content = `
+                                <span class="block px-1 py-0.5 rounded bg-purple-600 text-white font-black text-[9px] mt-0.5 truncate" title="${session.deliverable.title}">
+                                    🏆 ${session.deliverable.percent}
+                                </span>
+                            `;
+                        } else if (isDelivery) {
+                            cellBg = "bg-amber-100 border-amber-400 text-amber-950 font-extrabold ring-2 ring-amber-400/30";
+                            content = `
+                                <span class="block px-1 py-0.5 rounded bg-amber-500 text-slate-950 font-black text-[9px] mt-0.5 truncate" title="${session.deliverable.title}">
+                                    📦 ${session.deliverable.percent}
+                                </span>
+                            `;
+                        } else {
+                            cellBg = "bg-blue-50 border-blue-200 text-blue-950 font-medium hover:bg-blue-100";
+                            content = `
+                                <div class="text-[9px] font-bold text-blue-700 mt-0.5 truncate" title="${session.topic}">
+                                    S${session.sessionNum}
+                                </div>
+                            `;
+                        }
+                    }
+
+                    monthHTML += `
+                        <div ${session ? `onclick="jumpToWeekDirect(${session.weekIdx})"` : ''} 
+                            class="h-16 sm:h-20 p-1 rounded-lg border transition flex flex-col justify-between ${cellBg} ${session ? 'cursor-pointer hover:shadow-md' : 'opacity-80'}">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-2xs ${session ? 'text-slate-900' : 'text-slate-400'}">${day}</span>
+                                ${session && session.sessionNum ? `<span class="text-[8px] text-slate-400 hidden sm:inline">S${session.sessionNum}</span>` : ''}
+                            </div>
+                            <div>${content}</div>
+                        </div>
+                    `;
+                }
+
+                monthHTML += `</div>`;
+                monthCard.innerHTML = monthHTML;
+                container.appendChild(monthCard);
+            });
+        }
+
+        // View Mode Switcher
+        function setViewMode(mode) {
+            currentViewMode = mode;
+            
+            const weeklyContainer = document.getElementById('weekly-view-container');
+            const gridContainer = document.getElementById('grid-view-container');
+            const fullContainer = document.getElementById('full-view-container');
+            const deliveriesContainer = document.getElementById('deliveries-view-container');
+
+            const btnWeekly = document.getElementById('view-weekly-btn');
+            const btnGrid = document.getElementById('view-grid-btn');
+            const btnFull = document.getElementById('view-full-btn');
+            const btnDeliveries = document.getElementById('view-deliveries-btn');
+
+            // Reset classes
+            [btnWeekly, btnGrid, btnFull, btnDeliveries].forEach(btn => {
+                if (btn) btn.className = "flex-1 md:flex-none px-3.5 py-2 rounded-md text-xs font-bold text-slate-600 hover:text-slate-900 transition whitespace-nowrap";
+            });
+
+            weeklyContainer.classList.add('hidden');
+            gridContainer.classList.add('hidden');
+            fullContainer.classList.add('hidden');
+            deliveriesContainer.classList.add('hidden');
+
+            if (mode === 'weekly') {
+                weeklyContainer.classList.remove('hidden');
+                if (btnWeekly) btnWeekly.className = "flex-1 md:flex-none px-3.5 py-2 rounded-md text-xs font-bold transition text-slate-800 bg-white shadow-sm whitespace-nowrap";
+                renderWeeklyView();
+            } else if (mode === 'grid') {
+                gridContainer.classList.remove('hidden');
+                if (btnGrid) btnGrid.className = "flex-1 md:flex-none px-3.5 py-2 rounded-md text-xs font-bold transition text-slate-800 bg-white shadow-sm whitespace-nowrap";
+                renderGridView();
+            } else if (mode === 'full') {
+                fullContainer.classList.remove('hidden');
+                if (btnFull) btnFull.className = "flex-1 md:flex-none px-3.5 py-2 rounded-md text-xs font-bold transition text-slate-800 bg-white shadow-sm whitespace-nowrap";
+                renderFullView();
+            } else if (mode === 'deliveries') {
+                deliveriesContainer.classList.remove('hidden');
+                if (btnDeliveries) btnDeliveries.className = "flex-1 md:flex-none px-3.5 py-2 rounded-md text-xs font-bold transition text-slate-800 bg-white shadow-sm whitespace-nowrap";
+                renderDeliveriesView();
+            }
+        }
+
+        function renderCurrentView() {
+            if (currentViewMode === 'weekly') renderWeeklyView();
+            else if (currentViewMode === 'grid') renderGridView();
+            else if (currentViewMode === 'full') renderFullView();
+            else if (currentViewMode === 'deliveries') renderDeliveriesView();
+        }
+
+        // Navigation Functions
+        function changeWeek(direction) {
+            const newIndex = currentWeekIndex + direction;
+            if (newIndex >= 0 && newIndex < courseWeeks.length) {
+                currentWeekIndex = newIndex;
+                renderWeeklyView();
+            }
+        }
+
+        function jumpToWeekSelect(index) {
+            currentWeekIndex = parseInt(index, 10);
+            renderWeeklyView();
+        }
+
+        function jumpToWeekDirect(index) {
+            currentWeekIndex = index;
+            setViewMode('weekly');
+        }
+
+        function jumpToUnit(unitNum) {
+            const unitMap = { 1: 0, 2: 5, 3: 10, 4: 14 };
+            if (unitMap[unitNum] !== undefined) {
+                currentWeekIndex = unitMap[unitNum];
+                setViewMode('weekly');
+            }
+        }
+
+        function jumpToCurrentWeek() {
+            const now = new Date();
+            const year = now.getFullYear();
+
+            let targetIndex = 0;
+
+            if (year === 2026) {
+                const month = now.getMonth() + 1; // 1-12
+                const day = now.getDate();
+
+                if (month === 8) { // Aug
+                    if (day >= 24) targetIndex = 1;
+                    if (day >= 31) targetIndex = 2;
+                } else if (month === 9) { // Sep
+                    if (day < 7) targetIndex = 2;
+                    else if (day < 14) targetIndex = 3;
+                    else if (day < 21) targetIndex = 4;
+                    else targetIndex = 5;
+                } else if (month === 10) { // Oct
+                    if (day < 5) targetIndex = 6;
+                    else if (day < 12) targetIndex = 7;
+                    else if (day < 19) targetIndex = 8;
+                    else targetIndex = 9;
+                } else if (month === 11) { // Nov
+                    if (day < 2) targetIndex = 10;
+                    else if (day < 9) targetIndex = 11;
+                    else if (day < 16) targetIndex = 12;
+                    else if (day < 23) targetIndex = 13;
+                    else targetIndex = 14;
+                }
+            }
+
+            currentWeekIndex = targetIndex;
+            setViewMode('weekly');
+        }
+
+        function updateProgressBar() {
+            const percent = Math.round(((currentWeekIndex + 1) / courseWeeks.length) * 100);
+            document.getElementById('progress-bar').style.width = `${percent}%`;
+            document.getElementById('progress-percent').textContent = `${percent}%`;
+        }
+
+        // Search Filter Logic
+        function handleSearch() {
+            const query = document.getElementById('search-input').value.toLowerCase().trim();
+            const clearBtn = document.getElementById('clear-search-btn');
+
+            if (query.length > 0) {
+                clearBtn.classList.remove('hidden');
+            } else {
+                clearBtn.classList.add('hidden');
+                renderCurrentView();
+                return;
+            }
+
+            // Switch to full view for searching across all sessions
+            setViewMode('full');
+
+            const container = document.getElementById('full-semester-list');
+            container.innerHTML = '';
+
+            let matchesCount = 0;
+
+            courseWeeks.forEach(week => {
+                const matchingSessions = week.sessions.filter(s => 
+                    s.topic.toLowerCase().includes(query) ||
+                    s.type.toLowerCase().includes(query) ||
+                    s.notes.toLowerCase().includes(query) ||
+                    (s.deliverable && s.deliverable.title.toLowerCase().includes(query))
+                );
+
+                if (matchingSessions.length > 0) {
+                    matchesCount += matchingSessions.length;
+                    const weekCard = document.createElement('div');
+                    weekCard.className = "bg-white border border-blue-200 rounded-2xl p-5 shadow-sm space-y-3";
+                    
+                    let sessionsHTML = '';
+                    matchingSessions.forEach(s => {
+                        sessionsHTML += `
+                            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+                                <div>
+                                    <span class="px-2 py-0.5 rounded bg-blue-600 text-white font-bold text-2xs">
+                                        ${s.date} • Semana ${week.weekNum}
+                                    </span>
+                                    <p class="font-extrabold text-slate-900 mt-1">${s.topic}</p>
+                                    <p class="text-2xs text-slate-500">${s.notes}</p>
+                                </div>
+                                ${s.deliverable ? `
+                                    <span class="px-2 py-1 bg-amber-500 text-slate-950 font-extrabold text-2xs rounded">
+                                        ${s.deliverable.percent}
+                                    </span>
+                                ` : ''}
+                            </div>
+                        `;
+                    });
+
+                    weekCard.innerHTML = `
+                        <h4 class="text-xs font-extrabold text-blue-800 uppercase tracking-wider">Semana ${week.weekNum} — ${week.unitName}</h4>
+                        <div class="space-y-2">${sessionsHTML}</div>
+                    `;
+
+                    container.appendChild(weekCard);
+                }
+            });
+
+            if (matchesCount === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 bg-white rounded-2xl border border-slate-200 p-6">
+                        <i class="fa-solid fa-magnifying-glass text-3xl text-slate-300 mb-3 block"></i>
+                        <p class="font-bold text-slate-700 text-sm">No se encontraron resultados para "${query}"</p>
+                        <p class="text-xs text-slate-400 mt-1">Intenta buscar palabras clave como "cubo", "arma", "madera" o "examen".</p>
+                    </div>
+                `;
+            }
+        }
+
+        function clearSearch() {
+            document.getElementById('search-input').value = '';
+            document.getElementById('clear-search-btn').classList.add('hidden');
+            renderCurrentView();
+        }
+
+        // Modal Controls
+        function openCheckInModal() {
+            document.getElementById('modal-checkin').classList.remove('hidden');
+        }
+
+        function closeCheckInModal() {
+            document.getElementById('modal-checkin').classList.add('hidden');
+        }
+
+        function openRubricModal() {
+            document.getElementById('modal-rubric').classList.remove('hidden');
+        }
+
+        function closeRubricModal() {
+            document.getElementById('modal-rubric').classList.add('hidden');
+        }
+
+        function selectMood(mood) {
+            alert(`¡Gracias por tu registro ("${mood}")! Ahora serás redirigido al formulario completo para el docente.`);
+            const btn = document.getElementById('google-form-link-btn');
+            if (btn && btn.href && btn.href !== '#') {
+                window.open(btn.href, '_blank');
+            }
+        }
+
+        // Populate dropdown menu for week selection
+        function populateWeekDropdown() {
+            const select = document.getElementById('week-select-dropdown');
+            select.innerHTML = '';
+            courseWeeks.forEach((week, i) => {
+                const opt = document.createElement('option');
+                opt.value = i;
+                opt.textContent = `Semana ${week.weekNum}: ${week.dateRange}`;
+                select.appendChild(opt);
+            });
+        }
+
+        // On Window Load Initialization
+        window.onload = function() {
+            populateWeekDropdown();
+            jumpToCurrentWeek(); // Auto detects week or defaults to week 1
+            renderCurrentView();
+        };
+    </script>
+</body>
+</html>
